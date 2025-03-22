@@ -19,18 +19,16 @@ class PDFExtractor:
             return {}
             
         results = {}
-        section_start_pages_0idx = [page - 1 for page in section_start_pages]
-        section_boundaries = section_start_pages_0idx
         
-        for i in range(len(section_start_pages)):
-            section_num = i + 1
-            start_page = section_boundaries[i]
-            end_page = section_boundaries[i + 1] - 1
+        for idx, page_num in enumerate(section_start_pages):
+            section_num = idx + 1
+            start_page = 0 if idx == 0 else section_start_pages[idx-1]
+            end_page = page_num + 1 if (idx == len(section_start_pages) - 1) else page_num
             
             section_text = ""
             section_highlights = []
             
-            for page_num in range(start_page, end_page + 1):
+            for page_num in range(start_page, end_page):
                 page = self.doc[page_num]                
                 section_text += page.get_text()
                 annots = page.annots()
