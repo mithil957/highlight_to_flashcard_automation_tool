@@ -3,11 +3,10 @@ from typing import List, Dict, Any
 
 def generate_flashcards(chapter_data: Dict[str, Any], use_detailed: bool = True) -> List[Dict[str, str]]:
     try:
-        # Create input object for BAML client
         study_input = client.types.StudyInput(
             text=chapter_data['text'],
             highlights=chapter_data['highlights'],
-            notes=[]  # Empty for now, could add user notes in future
+            notes=[] #empty for now, TODO allow user to paste in notes and then feed them here 
         )
         
         # Call the appropriate BAML function
@@ -32,7 +31,7 @@ def generate_flashcards(chapter_data: Dict[str, Any], use_detailed: bool = True)
         return []
 
 def format_for_obsidian(flashcards: List[Dict[str, str]], format_type: str = "single-line") -> str:
-    obsidian_text = f"# Flashcards\n\n"
+    obsidian_text = ""
     
     if format_type == "single-line":
         separator = "::"
@@ -47,8 +46,5 @@ def format_for_obsidian(flashcards: List[Dict[str, str]], format_type: str = "si
             front = card['front'].strip()
             back = card['back'].strip()
             obsidian_text += f"{front}\n{separator}\n{back}\n\n"
-    
-    # Add tag to make it recognized as flashcard deck
-    obsidian_text += "#flashcard"
     
     return obsidian_text

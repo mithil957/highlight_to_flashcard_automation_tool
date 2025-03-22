@@ -1,0 +1,4 @@
+.venv
+.vscode
+src/baml_client/*
+**/__pycache__
