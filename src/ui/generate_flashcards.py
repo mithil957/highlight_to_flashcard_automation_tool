@@ -94,6 +94,17 @@ def display_generate_flashcards():
                         st.error(f"Error generating flashcards: {e}")
 
     
-    # Navigation button
-    if st.button("Back to Sections", use_container_width=True):
-        st.session_state.current_step = "configure_sections"
+    # Navigation buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Back to Sections", use_container_width=True):
+            st.session_state.current_step = "configure_sections"
+    
+    with col2:
+        if st.button("Return to Home", use_container_width=True, type="primary"):
+            # Clear session state to start fresh
+            for key in list(st.session_state.keys()):
+                if key != "current_step":
+                    del st.session_state[key]
+            # Set to home page
+            st.session_state.current_step = "home"
